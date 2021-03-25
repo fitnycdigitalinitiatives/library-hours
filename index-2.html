@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link href="style.css" rel="stylesheet">
+
+  <title>Gladys Marcus Library</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/1ddf8635da.js" crossorigin="anonymous"></script>
+  <!-- Google Calendar API JS -->
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    function start() {
+      // Initializes the client with the API key and the Translate API.
+      gapi.client.init({
+        'apiKey': 'AIzaSyDnIFnS4i7ytNhD12Whm5wn5N7G1jV_aow',
+        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
+      }).then(function() {
+        listUpcomingEvents();
+      })
+    };
+
+    function listUpcomingEvents() {
+      var now = new Date();
+      var min = new Date(now);
+      min.setHours(min.getHours() - 24);
+      var max = new Date(now);
+      max.setHours(max.getHours() + 24);
+      gapi.client.calendar.events.list({
+        'calendarId': 'c_4usr04gs60r8f0uap1ef64kir8@group.calendar.google.com',
+        'timeMin': min.toISOString(),
+        'timeMax': max.toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'orderBy': 'startTime'
+      }).then(function(response) {
+        var events = response.result.items;
+        if (events.length > 0) {
+          var open = false;
+          var today_events = [];
+          var tomorrow_events = []
+          for (i = 0; i < events.length; i++) {
+            var event = events[i];
+            var starting = new Date(event.start.dateTime);
+            var ending = new Date(event.end.dateTime);
+            if ((now >= starting) && (now <= ending)) {
+              open = true;
+            }
+            if (now.getFullYear() === starting.getFullYear() && now.getMonth() === starting.getMonth() && now.getDate() === starting.getDate()) {
+              today_events.push(event);
+            }
+            if (now.getFullYear() === starting.getFullYear() && now.getMonth() === starting.getMonth() && (now.getDate() + 1) === starting.getDate()) {
+              tomorrow_events.push(event);
+            }
+          }
+          if (open) {
+            $('#status').text('The Library is currently open');
+            $('#hours').append('<p>Today\'s hours:</p>');
+            var hours_list = $('<ul class="list-unstyled"></ul>');
+            for (var i = 0; i < today_events.length; i++) {
+              var todays_start = new Date(today_events[i].start.dateTime);
+              var todays_end = new Date(today_events[i].end.dateTime);
+              hours_list.append('<li>' + today_events[i].summary + ': ' + todays_start.toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+              }) + ' - ' + todays_end.toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+              }) + '</li>');
+            }
+            $('#hours').append(hours_list);
+          } else {
+            $('#status').text('The Library is currently closed');
+            var early = false;
+            for (var i = 0; i < today_events.length; i++) {
+              if (now <= new Date(today_events[i].start.dateTime)) {
+                early = true;
+              }
+            }
+            if (early) {
+              $('#hours').append('<p>Today\'s hours:</p>');
+              var hours_list = $('<ul class="list-unstyled"></ul>');
+              for (var i = 0; i < today_events.length; i++) {
+                var todays_start = new Date(today_events[i].start.dateTime);
+                var todays_end = new Date(today_events[i].end.dateTime);
+                hours_list.append('<li>' + today_events[i].summary + ': ' + todays_start.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+                }) + ' - ' + todays_end.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+                }) + '</li>');
+              }
+              $('#hours').append(hours_list);
+            } else {
+              $('#hours').append('<p>Tomorrow\'s hours:</p>');
+              var hours_list = $('<ul class="list-unstyled"></ul>');
+              for (var i = 0; i < tomorrow_events.length; i++) {
+                var tomorrows_start = new Date(tomorrow_events[i].start.dateTime);
+                var tomorrows_end = new Date(tomorrow_events[i].end.dateTime);
+                hours_list.append('<li>' + tomorrow_events[i].summary + ': ' + tomorrows_start.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+                }) + ' - ' + tomorrows_end.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+                }) + '</li>');
+                console.log(tomorrow_events[i].summary + ': ' + tomorrows_start.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+                }) + ' - ' + tomorrows_end.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+                }));
+              }
+              $('#hours').append(hours_list);
+            }
+          }
+        } else {
+          console.log("Error");
+        }
+      });
+    }
+
+    // Loads the JavaScript client library and invokes `start` afterwards.
+    gapi.load('client', start);
+  </script>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="images/button.png" height="30" class="d-inline-block align-top" alt="">
+          Gladys Marcus Library
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">Find, Borrow, Request</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Databases</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Research and Support Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Library Spaces and Technology</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">About</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="container-fluid">
+    <div class="landing row justify-content-center">
+      <div class="col-md-6 col-xl-5 p-lg-5 my-5 bg-light">
+        <h1 class="display-3 fw-normal">Gladys Marcus Library</h1>
+        <p class="lead">The FIT Library is your one-stop shop for all your information needs. This tagline is clever and persausive. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Morbi blandit cursus risus at ultrices mi tempus imperdiet.</p>
+      </div>
+    </div>
+    <div class="row bg-warning">
+      <div class="col-12 text-center p-3">
+        <span id="status"></span> <i class="fas fa-info-circle" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Library Hours</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="hours">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center bg-light">
+      <div class="col-md-6 col-xl-5 p-lg-5 my-5">
+        <h2 class="mb-4">
+          <i class="fa fa-search"></i>
+          OneSearch
+        </h2>
+        <form id="simple" style="position: relative;" action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="searchForm" target="_new" onsubmit="searchPrimo()">
+          <!-- Customizable Parameters --><input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT"><input name="tab" type="hidden" value="CentralIndex"><input name="search_scope" type="hidden" value="Online_access"><input name="mode"
+            type="hidden" value="basic">
+          <!-- Fixed parameters --><input name="displayMode" type="hidden" value="full"><input name="bulkSize" type="hidden" value="10"><input name="highlight" type="hidden" value="true"><input name="dum" type="hidden" value="true"><input
+            id="primoQuery" name="query" type="hidden"><input name="displayField" type="hidden" value="all">
+          <!-- Enable this if "Expand My Results" is enabled by default in Views Wizard --><input name="pcAvailabiltyMode" type="hidden" value="true"><input id="primoQueryTemp"
+            style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" type="text" value="" placeholder="Search for books, e-books, articles, digital media, and more"></form>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-9 p-lg-5 my-5">
+        <h2>
+          <i class="fas fa-book-open"></i>
+          What's New?
+        </h2>
+        <iframe src="https://fitnycdigitalinitiatives.github.io/onesearch-newbooks/" width="100%" class="new-books-slider"></iframe>
+      </div>
+    </div>
+    <div class="row justify-content-center bg-light">
+      <div class="col-md-6 col-xl-5 p-lg-5 my-5">
+        <div class="ratio ratio-16x9">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/FcyC6FFY1eU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="col-md-4 col-xl-3 p-lg-5 my-5">
+        <h2 class="mb-4">
+          <i class="far fa-calendar-alt"></i>
+          Upcoming Events
+        </h2>
+        <ul>
+          <li>Love Your Library Event: 4/29</li>
+          <li>FIT Authors Event: 5/7</li>
+          <li>Citation Salon: 5/12</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
