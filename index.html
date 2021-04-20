@@ -145,7 +145,14 @@
   <script type="text/javascript">
     function searchPrimo() {
       document.getElementById("primoQuery").value = "any,contains," + document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
-      document.forms["searchForm"].submit();
+      document.forms["multisearch"].submit();
+    }
+  </script>
+  <script type="text/javascript">
+    function searchJournals() {
+      document.getElementById("journalsPrimoQuery").value = "any,contains," + document.getElementById("journalsQueryTemp").value.replace(/[,]/g, " ");
+      document.getElementById("journalsQuery").value = "any," + document.getElementById("journalsQueryTemp").value.replace(/[,]/g, " ");
+      document.forms["journalssearch"].submit();
     }
   </script>
 
@@ -202,9 +209,15 @@
           <i class="fa fa-search"></i>
           OneSearch
         </h2>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="multisearch-tab" data-bs-toggle="tab" data-bs-target="#multisearch" type="button" role="tab" aria-controls="multisearch" aria-selected="true">Multisearch</button>
+            <button class="nav-link active" id="multisearch-tab" data-bs-toggle="tab" data-bs-target="#multisearch" type="button" role="tab" aria-controls="multisearch" aria-selected="true">OneSearch</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="journals-tab" data-bs-toggle="tab" data-bs-target="#journals" type="button" role="tab" aria-controls="journals" aria-selected="true">Journals</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="databases-tab" data-bs-toggle="tab" data-bs-target="#databases" type="button" role="tab" aria-controls="databases" aria-selected="true">Databases</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="libguides-tab" data-bs-toggle="tab" data-bs-target="#libguides" type="button" role="tab" aria-controls="libguides" aria-selected="false">LibGuides</button>
@@ -213,27 +226,56 @@
             <button class="nav-link" id="site-tab" data-bs-toggle="tab" data-bs-target="#site" type="button" role="tab" aria-controls="site" aria-selected="false">Site Search</button>
           </li>
         </ul>
-        <div class="tab-content mt-4" id="myTabContent">
+        <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="multisearch" role="tabpanel" aria-labelledby="multisearch-tab">
-            <form id="simple" style="position: relative;" action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="searchForm" onsubmit="searchPrimo()">
-              <!-- Customizable Parameters --><input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT"><input name="tab" type="hidden" value="Everything"><input name="search_scope" type="hidden" value="MyInst_and_CI"><input name="mode"
-                type="hidden" value="basic">
-              <!-- Fixed parameters --><input name="displayMode" type="hidden" value="full"><input name="bulkSize" type="hidden" value="10"><input name="highlight" type="hidden" value="true"><input name="dum" type="hidden" value="true"><input
-                id="primoQuery" name="query" type="hidden"><input name="displayField" type="hidden" value="all">
-              <!-- Enable this if "Expand My Results" is enabled by default in Views Wizard --><input name="pcAvailabiltyMode" type="hidden" value="true"><input id="primoQueryTemp"
-                style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" type="text" value="" placeholder="Search for books, e-books, articles, digital media, and more"></form>
+            <form action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="multisearch" onsubmit="searchPrimo()">
+              <!-- Parameters -->
+              <input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT">
+              <input name="tab" type="hidden" value="Everything">
+              <input name="search_scope" type="hidden" value="MyInst_and_CI">
+              <input id="primoQuery" name="query" type="hidden">
+              <input class="mb-3" id="primoQueryTemp" style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" type="text" value=""
+                placeholder="Search for books, e-books, articles, digital media, and more">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="facet" id="everything" value="" checked>
+                <label class="form-check-label" for="inlineRadio1">Everything</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="facet" id="physical" value="tlevel,include,available_p">
+                <label class="form-check-label" for="inlineRadio2">Physical</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="facet" id="digital" value="tlevel,include,online_resources">
+                <label class="form-check-label" for="inlineRadio3">Digital</label>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
+            <form action="https://onesearch.fitnyc.edu/discovery/jsearch" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="journalssearch" onsubmit="searchJournals()">
+              <!-- Parameters -->
+              <input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT">
+              <input name="tab" type="hidden" value="jsearch_slot">
+              <input id="journalsPrimoQuery" name="query" type="hidden">
+              <input id="journalsQuery" name="journals" type="hidden">
+              <input id="journalsQueryTemp" style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" type="text" value="" placeholder="Search for journal titles">
+            </form>
+          </div>
+          <div class="tab-pane fade" id="databases" role="tabpanel" aria-labelledby="databases-tab">
+            <form action="https://fitnyc.libguides.com/az.php" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get">
+              <input type="search" name="q" id="q" style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" value="" placeholder="Search for database titles">
+            </form>
           </div>
           <div class="tab-pane fade" id="libguides" role="tabpanel" aria-labelledby="libguides-tab">
-            <form id="simple" style="position: relative;" action="https://fitnyc.libguides.com/srch.php" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="searchForm">
+            <form action="https://fitnyc.libguides.com/srch.php" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get">
               <input type="search" name="q" id="q" style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" value="" placeholder="Search for Library Guides">
             </form>
           </div>
           <div class="tab-pane fade" id="site" role="tabpanel" aria-labelledby="site-tab">
-            <form id="simple" style="position: relative;" action="https://ousearch.omniupdate.com/texis/search/" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="searchForm">
+            <form action="https://ousearch.omniupdate.com/texis/search/" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get">
               <!-- Fixed parameters -->
               <input name="site" id="site" value="default_collection" type="hidden">
               <input name="pr" value="fit-library" type="hidden">
-              <input type="search" name="query" id="q" style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" value="" placeholder="Search Library Website">
+              <input type="search" name="query" id="q" style="width: 100%; padding: 1rem; padding-right: 3rem; border: 1px solid black; border-radius: .25rem; font-size: 1.25rem;" value="" placeholder="Search the Library website">
             </form>
           </div>
         </div>
