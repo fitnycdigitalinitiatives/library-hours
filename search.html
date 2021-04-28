@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Hello, world!</title>
+  <link href="search.css" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Archivo+Narrow:400,400italic,700,700italic" rel="stylesheet">
+</head>
+
+<body style="max-width: 850px; padding: 0 1rem; margin-right: auto; margin-left: auto; font-family: 'archivo narrow', sans-serif; font-size: 1.1rem; line-height: 1.5; color: #3c3c3c; -webkit-text-size-adjust: none;">
+  <div id="search-container">
+    <h2 class="mb-4">
+      <i class="fa fa-search" title="OneSearch"></i>
+      OneSearch
+    </h2>
+    <div class="nav-scroller py-1 mb-2">
+      <ul class="nav nav-tabs" id="searchTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-button active" id="onesearch-tab" data-target="#onesearch" type="button" role="tab" aria-controls="onesearch" aria-selected="true">OneSearch</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-button" id="journals-tab" data-target="#journals" type="button" role="tab" aria-controls="journals" aria-selected="false">Journals</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-button" id="researchguides-tab" data-target="#researchguides" type="button" role="tab" aria-controls="researchguides" aria-selected="false">Research Guides</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-button" id="sitesearch-tab" data-target="#sitesearch" type="button" role="tab" aria-controls="sitesearch" aria-selected="false">Site Search</button>
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="onesearch" role="tabpanel" aria-labelledby="onesearch-tab">
+        <form action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="multisearch" onsubmit="searchPrimo()">
+          <!-- Parameters -->
+          <input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT">
+          <input name="tab" type="hidden" value="Everything">
+          <input name="search_scope" type="hidden" value="MyInst_and_CI">
+          <input id="primoQuery" name="query" type="hidden">
+          <div class="input-group">
+            <input id="primoQueryTemp" type="search" class="search-form" placeholder="Search for books, e-books, articles, digital media, and more" aria-label="Search for books, e-books, articles, digital media, and more"
+              aria-describedby="onesearch-tab">
+            <button class="submit-button" type="submit">
+              <i class="fas fa-search" title="Search"></i>
+              <span class="sr-only">Search</span>
+            </button>
+          </div>
+          <div class="radio-inline">
+            <input type="radio" name="facet" id="everything" value="" checked>
+            <label for="everything">Everything</label>
+          </div>
+          <div class="radio-inline">
+            <input type="radio" name="facet" id="physical" value="tlevel,include,available_p">
+            <label for="physical">Physical Materials</label>
+          </div>
+          <div class="radio-inline">
+            <input type="radio" name="facet" id="online" value="tlevel,include,online_resources">
+            <label for="online">Online Materials</label>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
+        <form action="https://onesearch.fitnyc.edu/discovery/jsearch" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="journalssearch" onsubmit="searchJournals()">
+          <!-- Parameters -->
+          <input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT">
+          <input name="tab" type="hidden" value="jsearch_slot">
+          <input id="journalsPrimoQuery" name="query" type="hidden">
+          <input id="journalsQuery" name="journals" type="hidden">
+          <div class="input-group">
+            <input id="journalsQueryTemp" type="search" class="search-form" placeholder="Search for journal titles, e.g. Vogue, Adweek, Wall Street Journal, etc." aria-label="Search for journal titles, e.g. Vogue, Adweek, Wall Street Journal, etc."
+              aria-describedby="journals-tab">
+            <button class="submit-button" type="submit">
+              <i class="fas fa-search" title="Search"></i>
+              <span class="sr-only">Search</span>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="researchguides" role="tabpanel" aria-labelledby="researchguides-tab">Research Guides</div>
+      <div class="tab-pane fade" id="sitesearch" role="tabpanel" aria-labelledby="sitesearch-tab">Site Search</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/1ddf8635da.js" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    // Tab functionality
+    $('#search-container .nav-button').click(function() {
+      if (!$(this).hasClass("active")) {
+        $('#search-container .nav-button').removeClass('active').attr('aria-selected', 'false');
+        $(this).addClass('active').attr('aria-selected', 'true');
+        var activeTab = $(this).data('target');
+        $('#search-container .tab-pane').removeClass('show active');
+        $(activeTab).addClass('show active');
+      }
+    });
+
+    function searchPrimo() {
+      document.getElementById("primoQuery").value = "any,contains," + document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
+      document.forms["multisearch"].submit();
+    }
+  </script>
+
+</body>
+
+</html>
