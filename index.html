@@ -209,18 +209,15 @@
           <i class="fa fa-search"></i>
           OneSearch
         </h2>
-        <ul class="nav nav-tabs nav-justified mb-3" id="myTab" role="tablist">
+        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="multisearch-tab" data-bs-toggle="tab" data-bs-target="#multisearch" type="button" role="tab" aria-controls="multisearch" aria-selected="true">OneSearch</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="journals-tab" data-bs-toggle="tab" data-bs-target="#journals" type="button" role="tab" aria-controls="journals" aria-selected="true">Journals</button>
+            <button class="nav-link" id="journals-tab" data-bs-toggle="tab" data-bs-target="#journals" type="button" role="tab" aria-controls="journals" aria-selected="false">Journals</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="databases-tab" data-bs-toggle="tab" data-bs-target="#databases" type="button" role="tab" aria-controls="databases" aria-selected="true">Databases</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="libguides-tab" data-bs-toggle="tab" data-bs-target="#libguides" type="button" role="tab" aria-controls="libguides" aria-selected="false">LibGuides</button>
+            <button class="nav-link" id="libguides-tab" data-bs-toggle="tab" data-bs-target="#libguides" type="button" role="tab" aria-controls="libguides" aria-selected="false">Research Guides</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="site-tab" data-bs-toggle="tab" data-bs-target="#site" type="button" role="tab" aria-controls="site" aria-selected="false">Site Search</button>
@@ -248,11 +245,11 @@
               </div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="facet" id="physical" value="tlevel,include,available_p">
-                <label class="form-check-label" for="inlineRadio2">Physical</label>
+                <label class="form-check-label" for="inlineRadio2">Physical Materials</label>
               </div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="facet" id="digital" value="tlevel,include,online_resources">
-                <label class="form-check-label" for="inlineRadio3">Digital</label>
+                <label class="form-check-label" for="inlineRadio3">Online Materials</label>
               </div>
             </form>
           </div>
@@ -264,19 +261,9 @@
               <input id="journalsPrimoQuery" name="query" type="hidden">
               <input id="journalsQuery" name="journals" type="hidden">
               <div class="input-group mb-3">
-                <input id="journalsQueryTemp" type="search" class="form-control form-control-lg" placeholder="Search for journal titles" aria-label="Search for journal titles" aria-describedby="search-button2">
+                <input id="journalsQueryTemp" type="search" class="form-control form-control-lg" placeholder="Search for journal titles, e.g. Vogue, Adweek, Wall Street Journal, etc." aria-label="Search for journal titles"
+                  aria-describedby="search-button2">
                 <button class="btn btn-outline-secondary" type="submit" id="search-button2">
-                  <i class="fas fa-search" title="Search"></i>
-                  <span class="visually-hidden">Search</span>
-                </button>
-              </div>
-            </form>
-          </div>
-          <div class="tab-pane fade" id="databases" role="tabpanel" aria-labelledby="databases-tab">
-            <form action="https://fitnyc.libguides.com/az.php" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get">
-              <div class="input-group mb-3">
-                <input type="search" name="q" class="form-control form-control-lg" placeholder="Search for database titles" aria-label="Search for database titles" aria-describedby="search-button3">
-                <button class="btn btn-outline-secondary" type="submit" id="search-button3">
                   <i class="fas fa-search" title="Search"></i>
                   <span class="visually-hidden">Search</span>
                 </button>
@@ -286,7 +273,8 @@
           <div class="tab-pane fade" id="libguides" role="tabpanel" aria-labelledby="libguides-tab">
             <form action="https://fitnyc.libguides.com/srch.php" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get">
               <div class="input-group mb-3">
-                <input type="search" name="q" class="form-control form-control-lg" placeholder="Search for Library Guides" aria-label="Search for Library Guides" aria-describedby="search-button4">
+                <input type="search" name="q" class="form-control form-control-lg" placeholder="Search for Research Guides by topic, e.g. designers, case studies, citations, etc." aria-label="Search for Research Guides"
+                  aria-describedby="search-button4">
                 <button class="btn btn-outline-secondary" type="submit" id="search-button4">
                   <i class="fas fa-search" title="Search"></i>
                   <span class="visually-hidden">Search</span>
