@@ -1,3 +1,7 @@
+#search-container h2 .fa {
+  margin-right: 0;
+}
+
 #search-container .nav-scroller {
   position: relative;
   z-index: 2;
