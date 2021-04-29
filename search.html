@@ -9,12 +9,14 @@
   <title>Hello, world!</title>
   <link href="search.css" rel="stylesheet">
   <link href="//fonts.googleapis.com/css?family=Archivo+Narrow:400,400italic,700,700italic" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/1ddf8635da.js" crossorigin="anonymous"></script>
 </head>
 
 <body style="max-width: 850px; padding: 0 1rem; margin-right: auto; margin-left: auto; font-family: 'archivo narrow', sans-serif; font-size: 1.1rem; line-height: 1.5; color: #3c3c3c; -webkit-text-size-adjust: none;">
   <div id="search-container">
     <h2 class="mb-4">
-      <i class="fa fa-search" title="OneSearch"></i>
+      <span class="fa fa-search" title="OneSearch"></span>
       OneSearch
     </h2>
     <div class="nav-scroller py-1 mb-2">
@@ -45,7 +47,7 @@
             <input id="primoQueryTemp" type="search" class="search-form" placeholder="Search for books, e-books, articles, digital media, and more" aria-label="Search for books, e-books, articles, digital media, and more"
               aria-describedby="onesearch-tab">
             <button class="submit-button" type="submit">
-              <i class="fas fa-search" title="Search"></i>
+              <span class="fas fa-search" title="Search"></span>
               <span class="sr-only">Search</span>
             </button>
           </div>
@@ -76,7 +78,7 @@
             <input id="journalsQueryTemp" type="search" class="search-form" placeholder="Search for journal titles, e.g. Vogue, Adweek, Wall Street Journal, etc." aria-label="Search for journal titles, e.g. Vogue, Adweek, Wall Street Journal, etc."
               aria-describedby="journals-tab">
             <button class="submit-button" type="submit">
-              <i class="fas fa-search" title="Search"></i>
+              <span class="fas fa-search" title="Search"></span>
               <span class="sr-only">Search</span>
             </button>
           </div>
@@ -89,7 +91,7 @@
             <input type="search" name="q" class="search-form" placeholder="Search for Research Guides by topic, e.g. designers, case studies, citations, etc."
               aria-label="Search for Research Guides by topic, e.g. designers, case studies, citations, etc." aria-describedby="researchguides-tab">
             <button class="submit-button" type="submit">
-              <i class="fas fa-search" title="Search"></i>
+              <span class="fas fa-search" title="Search"></span>
               <span class="sr-only">Search</span>
             </button>
           </div>
@@ -104,7 +106,7 @@
           <div class="input-group">
             <input type="search" name="query" class="search-form" placeholder="Search the Library website" aria-label="Search the Library website" aria-describedby="sitesearch-tab">
             <button class="submit-button" type="submit">
-              <i class="fas fa-search" title="Search"></i>
+              <span class="fas fa-search" title="Search"></span>
               <span class="sr-only">Search</span>
             </button>
           </div>
@@ -113,8 +115,6 @@
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/1ddf8635da.js" crossorigin="anonymous"></script>
   <script type="text/javascript">
     // Tab functionality
     $('#search-container .nav-button').click(function() {
