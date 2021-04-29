@@ -34,8 +34,8 @@
       </ul>
     </div>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="onesearch" role="tabpanel" aria-labelledby="onesearch-tab">
-        <form action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="multisearch" onsubmit="searchPrimo()">
+      <div class="tab-pane active" id="onesearch" role="tabpanel" aria-labelledby="onesearch-tab">
+        <form action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="onesearch" onsubmit="searchPrimo()">
           <!-- Parameters -->
           <input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT">
           <input name="tab" type="hidden" value="Everything">
@@ -49,21 +49,23 @@
               <span class="sr-only">Search</span>
             </button>
           </div>
-          <div class="radio-inline">
-            <input type="radio" name="facet" id="everything" value="" checked>
-            <label for="everything">Everything</label>
-          </div>
-          <div class="radio-inline">
-            <input type="radio" name="facet" id="physical" value="tlevel,include,available_p">
-            <label for="physical">Physical Materials</label>
-          </div>
-          <div class="radio-inline">
-            <input type="radio" name="facet" id="online" value="tlevel,include,online_resources">
-            <label for="online">Online Materials</label>
+          <div class="search-footer">
+            <div class="radio-inline">
+              <input type="radio" name="facet" id="everything" value="" checked>
+              <label for="everything">Everything</label>
+            </div>
+            <div class="radio-inline">
+              <input type="radio" name="facet" id="physical" value="tlevel,include,available_p">
+              <label for="physical">Physical Materials</label>
+            </div>
+            <div class="radio-inline">
+              <input type="radio" name="facet" id="online" value="tlevel,include,online_resources">
+              <label for="online">Online Materials</label>
+            </div>
           </div>
         </form>
       </div>
-      <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
+      <div class="tab-pane" id="journals" role="tabpanel" aria-labelledby="journals-tab">
         <form action="https://onesearch.fitnyc.edu/discovery/jsearch" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="journalssearch" onsubmit="searchJournals()">
           <!-- Parameters -->
           <input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT">
@@ -78,10 +80,37 @@
               <span class="sr-only">Search</span>
             </button>
           </div>
+          <div class="search-footer"></div>
         </form>
       </div>
-      <div class="tab-pane fade" id="researchguides" role="tabpanel" aria-labelledby="researchguides-tab">Research Guides</div>
-      <div class="tab-pane fade" id="sitesearch" role="tabpanel" aria-labelledby="sitesearch-tab">Site Search</div>
+      <div class="tab-pane" id="researchguides" role="tabpanel" aria-labelledby="researchguides-tab">
+        <form action="https://fitnyc.libguides.com/srch.php" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="researchguides">
+          <div class="input-group">
+            <input type="search" name="q" class="search-form" placeholder="Search for Research Guides by topic, e.g. designers, case studies, citations, etc."
+              aria-label="Search for Research Guides by topic, e.g. designers, case studies, citations, etc." aria-describedby="researchguides-tab">
+            <button class="submit-button" type="submit">
+              <i class="fas fa-search" title="Search"></i>
+              <span class="sr-only">Search</span>
+            </button>
+          </div>
+          <div class="search-footer"></div>
+        </form>
+      </div>
+      <div class="tab-pane" id="sitesearch" role="tabpanel" aria-labelledby="sitesearch-tab">
+        <form action="https://ousearch.omniupdate.com/texis/search/" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="sitesearch">
+          <!-- Fixed parameters -->
+          <input name="site" id="site" value="default_collection" type="hidden">
+          <input name="pr" value="fit-library" type="hidden">
+          <div class="input-group">
+            <input type="search" name="query" class="search-form" placeholder="Search the Library website" aria-label="Search the Library website" aria-describedby="sitesearch-tab">
+            <button class="submit-button" type="submit">
+              <i class="fas fa-search" title="Search"></i>
+              <span class="sr-only">Search</span>
+            </button>
+          </div>
+          <div class="search-footer"></div>
+        </form>
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -100,7 +129,13 @@
 
     function searchPrimo() {
       document.getElementById("primoQuery").value = "any,contains," + document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
-      document.forms["multisearch"].submit();
+      document.forms["onesearch"].submit();
+    }
+
+    function searchJournals() {
+      document.getElementById("journalsPrimoQuery").value = "any,contains," + document.getElementById("journalsQueryTemp").value.replace(/[,]/g, " ");
+      document.getElementById("journalsQuery").value = "any," + document.getElementById("journalsQueryTemp").value.replace(/[,]/g, " ");
+      document.forms["journalssearch"].submit();
     }
   </script>
 

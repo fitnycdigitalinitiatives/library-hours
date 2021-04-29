@@ -38,6 +38,13 @@
   white-space: nowrap;
 }
 
+#search-container #searchTab .nav-button:focus, #search-container #searchTab .nav-button:hover {
+  border-color: #3c90be40;
+  border-bottom-color: transparent;
+  background-color: #3c90be40;
+  isolation: isolate;
+}
+
 #search-container #searchTab .nav-button.active {
   color: #fff;
   background-color: #3c90be;
@@ -46,7 +53,10 @@
 
 #search-container .tab-content {
   background-color: #3c90be;
-  padding: 2rem 1rem;
+  padding-top: 2.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 2rem;
 }
 
 #search-container .tab-content>.tab-pane {
@@ -126,6 +136,10 @@
   color: #fff;
 }
 
+#search-container .search-footer {
+  min-height: 26px;
+}
+
 @media (min-width: 576px) {
   #search-container .search-form {
     font-size: 1.25rem;
@@ -137,5 +151,9 @@
 
   #search-container .radio-inline {
     margin-right: 1rem;
+  }
+
+  #search-container .search-footer {
+    height: 26px;
   }
 }
