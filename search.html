@@ -37,7 +37,7 @@
     </div>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane active" id="onesearch" role="tabpanel" aria-labelledby="onesearch-tab">
-        <form action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="onesearch" onsubmit="searchPrimo()">
+        <form action="https://suny-fit.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" method="get" name="onesearch" onsubmit="searchOneSearch()">
           <!-- Parameters -->
           <input name="vid" type="hidden" value="01SUNY_FIT:01SUNY_FIT">
           <input name="tab" type="hidden" value="Everything">
@@ -127,7 +127,7 @@
       }
     });
 
-    function searchPrimo() {
+    function searchOneSearch() {
       document.getElementById("primoQuery").value = "any,contains," + document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
       document.forms["onesearch"].submit();
     }
