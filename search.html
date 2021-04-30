@@ -116,15 +116,17 @@
     </div>
   </div>
   <script type="text/javascript">
-    // Tab functionality
-    $('#search-container .nav-button').click(function() {
-      if (!$(this).hasClass("active")) {
-        $('#search-container .nav-button').removeClass('active').attr('aria-selected', 'false');
-        $(this).addClass('active').attr('aria-selected', 'true');
-        var activeTab = $(this).data('target');
-        $('#search-container .tab-pane').removeClass('show active');
-        $(activeTab).addClass('show active');
-      }
+    $(document).ready(function() {
+      // Tab functionality
+      $('#search-container .nav-button').click(function() {
+        if (!$(this).hasClass("active")) {
+          $('#search-container .nav-button').removeClass('active').attr('aria-selected', 'false');
+          $(this).addClass('active').attr('aria-selected', 'true');
+          var activeTab = $(this).data('target');
+          $('#search-container .tab-pane').removeClass('show active');
+          $(activeTab).addClass('show active');
+        }
+      });
     });
 
     function searchOneSearch() {
